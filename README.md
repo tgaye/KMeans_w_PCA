@@ -3,10 +3,13 @@ Utilizes dimensionality reduction (PCA) in order to visualize clusters of studen
 
 Cluster Techniques used:
 
-###K-means Clustering
-###DBSCAN (density based scan)
-###Agglomerative Clustering (link=ward)
-###Agglomerative Clustering (link=complete)
+### K-means Clustering
+
+### DBSCAN (density based scan)
+
+### Agglomerative Clustering (link=ward)
+
+### Agglomerative Clustering (link=complete)
 
 First, lets take a look at our data.  Functions within DataExploration class will help with this.
 ```
@@ -46,7 +49,7 @@ hist_total_response_by_instr()
 We can see some classes had very low participation compared to others (more variance than our scores), and one instructor (#3)
 had more students that filled out surveys than either other instructor combined.
 
-##K-MEANS CLUSTERING
+## K-MEANS CLUSTERING
 
 Okay, now its time for the fun analysis.  Lets begin with the trusted K-means clustering technique. First we have to find our 
 optimal K (# of clusters) using the "elbow method".  We plot the variance explained with each iteration of K, and choose the number
@@ -66,12 +69,31 @@ easily interpretable (i.e not abstract)
 We can also plot a silohouette of our clusters to help visualize outliars (I will be doing this for the remained of clustering methods 
 we test against kmeans as well)
 
-##DBSCAN
+## DBSCAN
 ![figure_6](https://user-images.githubusercontent.com/34739163/44390041-9e999280-a4e9-11e8-94d2-a26a9b5d5920.png)
 
+My first impression of the model is that it doesn't fit our given data set very well.  The way DBSCAN works is it assumes every observation is its own cluster, and then it groups them based on their proximity/density (hence density-based scan).  Given
+our data spans a good length (disatisfied to satisfied) and has no real seperation to its 'clusters', this might not be the best model.
+
+Our silhouette visualization doesn't look any better for this model:
 ![figure_7](https://user-images.githubusercontent.com/34739163/44390043-9fcabf80-a4e9-11e8-8fa7-bf9ac6a70b12.png)
 
+## Agglomerative Clustering 
+
+We will try two variations of agg. clustering by playing with the hyperparameter that adjusts the linkage criterion we use.
+From scikit learn docs on the AgglomerativeClustering() function:
+
+```
+linkage : {“ward”, “complete”, “average”}, optional, default: “ward”
+
+Which linkage criterion to use. The linkage criterion determines which distance to use between sets of observation. The algorithm will merge the pairs of cluster that minimize this criterion.
+```
+
+The first graph I want to generate is a dendogram, which will help us better view how our error function decreases as we add clusters.
+
 ![figure_8](https://user-images.githubusercontent.com/34739163/44390046-a0fbec80-a4e9-11e8-925e-bb204a009f9a.png)
+
+Whats nice about dendograms is we can easily see what our model tells us our number of clusters should be, each cluster is its own distinct color.  Since red and green are our furthest children nodes, we have 2 clusters.
 
 ![figure_9](https://user-images.githubusercontent.com/34739163/44390049-a2c5b000-a4e9-11e8-8567-c0ed0912e7cb.png)
 
