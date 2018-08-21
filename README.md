@@ -30,7 +30,10 @@ Result:
 We can see we have 33 dimensions to work with, however only 28 of these are survey questions; which are what we want to base clusters on.
 Lets now start with a broad visualization of our data.
 
-First, lets look at average response for each question in the survey [hist_question_means()]:
+First, lets look at average response for each question in the survey.
+```
+hist_question_means():
+```
 ![figure_1](https://user-images.githubusercontent.com/34739163/44390015-93466700-a4e9-11e8-8c11-dee4ff5b507c.png)
 The scores seem roughly normally distributed, which tells us we shouldnt see top much variance in the data.
 
@@ -45,7 +48,6 @@ hist_total_response_by_class()
 hist_total_response_by_instr()
 ```
 ![figure_3](https://user-images.githubusercontent.com/34739163/44390033-99d4de80-a4e9-11e8-9474-0f3972c0604b.png)
-
 We can see some classes had very low participation compared to others (more variance than our scores), and one instructor (#3)
 had more students that filled out surveys than either other instructor combined.
 
@@ -69,14 +71,15 @@ easily interpretable (i.e not abstract)
 We can also plot a silohouette of our clusters to help visualize outliars (I will be doing this for the remained of clustering methods 
 we test against kmeans as well)
 
-## DBSCAN
 ![figure_6](https://user-images.githubusercontent.com/34739163/44390041-9e999280-a4e9-11e8-94d2-a26a9b5d5920.png)
 
+## DBSCAN
+![figure_7](https://user-images.githubusercontent.com/34739163/44390043-9fcabf80-a4e9-11e8-8fa7-bf9ac6a70b12.png)
 My first impression of the model is that it doesn't fit our given data set very well.  The way DBSCAN works is it assumes every observation is its own cluster, and then it groups them based on their proximity/density (hence density-based scan).  Given
 our data spans a good length (disatisfied to satisfied) and has no real seperation to its 'clusters', this might not be the best model.
 
 Our silhouette visualization doesn't look any better for this model:
-![figure_7](https://user-images.githubusercontent.com/34739163/44390043-9fcabf80-a4e9-11e8-8fa7-bf9ac6a70b12.png)
+![figure_8](https://user-images.githubusercontent.com/34739163/44390046-a0fbec80-a4e9-11e8-925e-bb204a009f9a.png)
 
 ## Agglomerative Clustering 
 
@@ -90,19 +93,40 @@ Which linkage criterion to use. The linkage criterion determines which distance 
 ```
 
 The first graph I want to generate is a dendogram, which will help us better view how our error function decreases as we add clusters.
-
-![figure_8](https://user-images.githubusercontent.com/34739163/44390046-a0fbec80-a4e9-11e8-925e-bb204a009f9a.png)
+```
+dendrogram = hier.dendrogram(hier.linkage(X_pca, method ='ward'))
+```
+![figure_9](https://user-images.githubusercontent.com/34739163/44390049-a2c5b000-a4e9-11e8-8567-c0ed0912e7cb.png)
 
 Whats nice about dendograms is we can easily see what our model tells us our number of clusters should be, each cluster is its own distinct color.  Since red and green are our furthest children nodes, we have 2 clusters.
 
-![figure_9](https://user-images.githubusercontent.com/34739163/44390049-a2c5b000-a4e9-11e8-8567-c0ed0912e7cb.png)
+We train our model on what we found to be optimal clusters (n=2)
+```
+model = AgglomerativeClustering(n_clusters = 2, affinity ='euclidean', linkage ='ward')
+y = model.fit_predict(X_pca)
+```
 
 ![figure_10](https://user-images.githubusercontent.com/34739163/44390051-a5280a00-a4e9-11e8-8a33-e4b948a9342e.png)
+Hmm, this is an interesting fit for our data.  I can see a potential use for this clustering method if our clients wanted to treat/view neutral and satisfied students in a similar light, and cared more about clustering disatisfied students.
 
+The silhouette looks like a much cleaner fit than the DBSCAN's as well:
 ![figure_11](https://user-images.githubusercontent.com/34739163/44390054-a6593700-a4e9-11e8-905e-6848ca676261.png)
 
+Last but not least, Agg. Clustering with complete linkage instead of default "ward".  Again we start with our dendogram.
+```
+dendrogram = hier.dendrogram(hier.linkage(X_pca, method ='complete'))
+```
 ![figure_12](https://user-images.githubusercontent.com/34739163/44390059-a822fa80-a4e9-11e8-885e-3d4610c5fb9a.png)
+
+I see 4 distinct children node colors, so we will use n=4 for our clusters.
 
 ![figure_13](https://user-images.githubusercontent.com/34739163/44390062-a9ecbe00-a4e9-11e8-929b-a2b2c715da49.png)
 
+This is an interesting fit as well if im being honest.  It looks much like our k-means clusters, only with a rather small outliar group of high value principal component #2.  If I had to draw a conclusion about this, I'd say it looks like our model is differentiating between satisfied students, and extremely statsfied students.  This might also be useful, if our client wants to make this distinction.
+
+Lastly, a silhouette visual for our second variation of agg clustering model:
 ![figure_14](https://user-images.githubusercontent.com/34739163/44390068-ab1deb00-a4e9-11e8-9ca4-94b78523e519.png)
+
+The small grouping of light blue that contains no negative outliars in our silhouette chart furthers my case that the model is grouping satisfied students and extremely satisfied students seperately.
+
+If I had to pick my two favorite fits for our given data, from the clustering methods demo'd here; it's a toss up between K-means and Agg Clustering with complete linkage.  Both fit the data in intuitive, satisfying ways when paired with PCA.  Again though, the optimal model depends on the business use / statistic of interest at hand.  
