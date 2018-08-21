@@ -81,7 +81,7 @@ our data spans a good length (disatisfied to satisfied) and has no real seperati
 Our silhouette visualization doesn't look any better for this model:
 ![figure_8](https://user-images.githubusercontent.com/34739163/44390046-a0fbec80-a4e9-11e8-925e-bb204a009f9a.png)
 
-## Agglomerative Clustering Linkage
+## Agglomerative Clustering (Link = Ward)
 
 We will try two variations of agg. clustering by playing with the hyperparameter that adjusts the linkage criterion we use.
 From scikit learn docs on the AgglomerativeClustering() function:
@@ -113,7 +113,7 @@ Hmm, this is an interesting fit for our data.  I can see a potential use for thi
 The silhouette looks like a much cleaner fit than the DBSCAN's as well:
 ![figure_11](https://user-images.githubusercontent.com/34739163/44390054-a6593700-a4e9-11e8-905e-6848ca676261.png)
 
-## Agglomerative Clustering Complete Link
+## Agglomerative Clustering (Link = Complete)
 ```
 dendrogram = hier.dendrogram(hier.linkage(X_pca, method ='complete'))
 ```
