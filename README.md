@@ -123,7 +123,9 @@ I see 4 distinct children node colors, so we will use n=4 for our clusters.
 
 ![figure_13](https://user-images.githubusercontent.com/34739163/44390062-a9ecbe00-a4e9-11e8-929b-a2b2c715da49.png)
 
-This is an interesting fit as well if im being honest.  It looks much like our k-means clusters, only with a rather small outliar group of high value principal component #2.  If I had to draw a conclusion about this, I'd say it looks like our model is differentiating between satisfied students, and extremely statsfied students.  This might also be useful, if our client wants to make this distinction.
+This is an interesting fit as well if im being honest.   It looks very much like our k-means clusters, only with a rather small outliar group of high value principal component #2.  
+
+If I had to draw a conclusion about this, I'd say it looks like our model is differentiating between satisfied students, and extremely statsfied students.  This might also be useful, if our client wants to make this distinction.
 
 Lastly, a silhouette visual for our second variation of agg clustering model:
 ![figure_14](https://user-images.githubusercontent.com/34739163/44390068-ab1deb00-a4e9-11e8-9ca4-94b78523e519.png)
