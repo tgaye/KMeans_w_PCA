@@ -26,18 +26,16 @@ Result:
 4      1      2          1           0           1 ...     1    1    1    1    1
 [5 rows x 33 columns]
 ```
-
 We can see we have 33 dimensions to work with, however only 28 of these are survey questions; which are what we want to base clusters on.
-Lets now start with a broad visualization of our data.
 
-First, lets look at average response for each question in the survey.
+Lets look at average response for each question in the survey.
 ```
 hist_question_means():
 ```
 ![figure_1](https://user-images.githubusercontent.com/34739163/44390015-93466700-a4e9-11e8-8c11-dee4ff5b507c.png)
 The scores seem roughly normally distributed, which tells us we shouldnt see top much variance in the data.
 
-Now lets look at survey participation, both by class and by instructor.  (13 classes, 3 instructors):
+Now lets view survey participation, both by class and by instructor.  (13 classes, 3 instructors):
 
 ```
 hist_total_response_by_class()
@@ -53,7 +51,7 @@ had more students that filled out surveys than either other instructor combined.
 
 ## K-MEANS CLUSTERING
 
-Okay, now its time for the fun analysis.  Lets begin with the trusted K-means clustering technique. First we have to find our 
+Now its time for clustering models.  Lets begin with the trusted K-means clustering technique. First we have to find our 
 optimal K (# of clusters) using the "elbow method".  We plot the variance explained with each iteration of K, and choose the number
 that represents the most variance, avoiding diminishing returns of adding more clusters.
 
