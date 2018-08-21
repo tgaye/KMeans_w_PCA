@@ -3,13 +3,10 @@ Utilizes dimensionality reduction (PCA) in order to visualize clusters of studen
 
 Cluster Techniques used:
 
-K-means Clustering
-
-DBSCAN (density based scan)
-
-Agglomerative Clustering (link=ward)
-
-Agglomerative Clustering (link=complete)
+###K-means Clustering
+###DBSCAN (density based scan)
+###Agglomerative Clustering (link=ward)
+###Agglomerative Clustering (link=complete)
 
 First, lets take a look at our data.  Functions within DataExploration class will help with this.
 ```
@@ -49,7 +46,7 @@ hist_total_response_by_instr()
 We can see some classes had very low participation compared to others (more variance than our scores), and one instructor (#3)
 had more students that filled out surveys than either other instructor combined.
 
-**K-MEANS CLUSTERING
+##K-MEANS CLUSTERING
 
 Okay, now its time for the fun analysis.  Lets begin with the trusted K-means clustering technique. First we have to find our 
 optimal K (# of clusters) using the "elbow method".  We plot the variance explained with each iteration of K, and choose the number
@@ -69,7 +66,7 @@ easily interpretable (i.e not abstract)
 We can also plot a silohouette of our clusters to help visualize outliars (I will be doing this for the remained of clustering methods 
 we test against kmeans as well)
 
-**DBSCAN
+##DBSCAN
 ![figure_6](https://user-images.githubusercontent.com/34739163/44390041-9e999280-a4e9-11e8-94d2-a26a9b5d5920.png)
 
 ![figure_7](https://user-images.githubusercontent.com/34739163/44390043-9fcabf80-a4e9-11e8-8fa7-bf9ac6a70b12.png)
