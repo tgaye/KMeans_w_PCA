@@ -1,5 +1,5 @@
 # KMeans_w_PCA
-Utilizes dimensionality reduction (PCA) in order to visualize clusters of students, using survey answers. Compares results with and without PCA.  Tests a number of clustering methods.
+Utilizes k-means in order to visualize clusters of students, using survey answers. Compares results with and without PCA.  Tests a number of clustering methods.
 
 Cluster Techniques used:
 
